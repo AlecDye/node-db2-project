@@ -1,6 +1,6 @@
 exports.up = function (knex) {
   return knex.schema.table("cars", (tbl) => {
-    tbl.increments("id");
+    // tbl.increments("id");
     tbl.string("Transmission");
     tbl.string("TitleStatus");
   });

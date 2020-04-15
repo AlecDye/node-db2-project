@@ -50,7 +50,42 @@ router.post("/", (req, res) => {
     );
 });
 // PUT ---
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  db("cars")
+    .where({ id })
+    .update(changes)
+    .then((count) => {
+      if (count) {
+        res.json({ update: count });
+      } else {
+        res.status(404).json({ message: "Car not found" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Can't update car", error });
+    });
+});
 
 // DELETE ---
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("cars")
+    .where({ id })
+    .del()
+    .then((count) => {
+      if (count) {
+        res.json({ removed: count });
+      } else {
+        res.status(404).json({ message: "Car not found" });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Can't remove car", error });
+    });
+});
 
 module.exports = router;
